@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+
+    <div class="card-deck">
+        <div class="card">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This</p>
+                <p class="card-text"></p>
+                <p class="card-text"></p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        let requestURL = "ezquiz.json";
+        let request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {
+                dataReportStatus(JSON.parse(request.responseText));
+            }
+        };
+        request.open("GET", requestURL, true);
+        request.send();
+
+        let el1;
+
+        function dataReportStatus(data) {
+            document.open();
+            document.write("<head>");
+
+            document.write(" <meta charset=\"UTF-8\" /><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />");
+            document.write(" <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\" />");
+            document.write("<scr" + "ipt src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js\"></scr" + "ipt>");
+            document.write("<scr" + "ipt src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js\"></scr" + "ipt>");
+            document.write("<scr" + "ipt src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js\"></scr" + "ipt>")
+            document.write("<link href=\"https://fonts.googleapis.com/css2?family=Kanit&display=swap\" rel=\"stylesheet\">");
+            document.write("<link rel=\"stylesheet\" href=\"styles.css\">");
+            document.write("<title>lab5-5</title>");
+            document.write("</head>");
+
+            var count = 0;
+
+            document.write("<div class=\"container\">");
+
+
+
+            for (var i = 0; i < data.tracks.items.length; i++) {
+                if (count == 0) {
+                    document.write("<div class=\"row\">");
+                }
+                document.write("<div class=\"col-4\">");
+                document.write("<div class=\"card\">");
+                document.write("<img class=\"card-img-top\" src=\"" + data.tracks.items[i].album.images[0].url + "\" />");
+                document.write("<div class=\"card-body\">");
+                document.write("<h5 class=\"card-title\">" + data.tracks.items[i].album.name + "</h5>");
+                document.write("<p class=\"card-text\">" + "Artisi : " + data.tracks.items[i].album.artists[0].name + "</p>");
+                document.write("<p class=\"card-text\">" + "Release Date : " + data.tracks.items[i].album.release_date + "</p>");
+                document.write("<p class=\"card-text\">" + "Available : " + data.tracks.items[i].album.available_markets.length + "</p>");
+                document.write("</div>");
+                document.write("</div>");
+                document.write("</div>");
+                count++;
+                if (count == 3) {
+                    document.write("</div>");
+                    count = 0;
+                }
+            }
+
+
+            document.write("</div>");
+
+            document.close();
+
+        }
+    </script>
+</body>
+
+</html>
